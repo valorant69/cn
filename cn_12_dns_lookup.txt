@@ -1,0 +1,20 @@
+import socket
+
+def dns_lookup(input_value):
+    try:
+        # Check if the input is an IP address by attempting to parse it
+        socket.inet_aton(input_value)
+        # If successful, perform a reverse lookup
+        hostname = socket.gethostbyaddr(input_value)
+        print(f"The URL for IP address {input_value} is: {hostname[0]}")
+    except socket.error:
+        # If parsing fails, treat input as a URL and perform a DNS lookup
+        try:
+            ip_address = socket.gethostbyname(input_value)
+            print(f"The IP address for URL {input_value} is: {ip_address}")
+        except socket.gaierror:
+            print("Invalid input or DNS lookup failed.")
+
+# Example usage
+user_input = input("Enter an IP address or URL: ")
+dns_lookup(user_input)
